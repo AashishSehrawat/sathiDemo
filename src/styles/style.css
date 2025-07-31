@@ -1,0 +1,22 @@
+
+.slick-slider {
+    display: flex !important;
+    align-items: center;
+}
+
+.slick-dots {
+    bottom: -40px !important;
+}
+
+.slick-dots li button::before {
+    font-size: 10px !important;
+}
+
+.footerContent {
+    border-radius: 16px;
+    padding: 50px;
+    background-image: url("../assets/footer.webp");
+    background-repeat: no-repeat;
+    background-position-y: -2rem;
+    background-size: cover;
+}

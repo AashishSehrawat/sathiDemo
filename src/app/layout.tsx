@@ -1,15 +1,19 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Lato, Nunito_Sans } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// Define Lato for headings (with 'variable' for CSS flexibility)
+const lato = Lato({
   subsets: ["latin"],
+  weight: ["400", "700"], // Normal + Bold
+  variable: "--font-heading", // CSS variable name
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+// Define Nunito Sans for body text
+const nunitoSans = Nunito_Sans({
   subsets: ["latin"],
+  weight: ["400", "600"], // Normal + Semi-bold
+  variable: "--font-body",
 });
 
 export const metadata: Metadata = {
@@ -25,7 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${lato.variable} ${nunitoSans.variable} antialiased`}
       >
         {children}
       </body>
