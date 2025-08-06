@@ -91,7 +91,7 @@ const Header = ({ homeRef, aboutRef, servicesRef, contactRef }: HeaderProps) => 
               Sign in
             </Button>
           </Link>
-          <Link href="/signup" className="cursor-pointer">
+          <Link href="/register/role-selection" className="cursor-pointer">
             <Button
               className="bg-[var(--blue)] cursor-pointer text-[1.05rem]"
             >

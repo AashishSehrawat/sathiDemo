@@ -1,6 +1,8 @@
-import { Document, Model, Schema, model, models } from "mongoose";
+import bcrypt from "bcryptjs";
+import mongoose, { Document, Model, Schema, model, models } from "mongoose";
 
 interface IStudent extends Document {
+  _id: mongoose.Types.ObjectId;
   email: string;
   password: string;
   name: string;
@@ -8,6 +10,8 @@ interface IStudent extends Document {
   school: string;
   standard: string;
   dob: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
   // interests?: string[];
 }
 
@@ -21,35 +25,44 @@ const studentSchema = new Schema<IStudent>(
       trim: true,
       validate: /\S+@\S+\.\S+/,
     },
-    password: { 
-      type: String, 
-      required: true 
+    password: {
+      type: String,
+      required: true,
     },
-    name: { 
-      type: String, 
-      required: true 
+    name: {
+      type: String,
+      required: true,
     },
-    role: { 
-      type: String, 
-      enum: ["student"], 
-      default: "student" 
+    role: {
+      type: String,
+      enum: ["student"],
+      default: "student",
     },
-    school: { 
-      type: String, 
-      required: true
+    school: {
+      type: String,
+      required: true,
     },
-    standard: { 
-      type: String, 
-      required: true 
+    standard: {
+      type: String,
+      required: true,
     },
-    dob: { 
-      type: Date, 
-      required: true 
+    dob: {
+      type: Date,
+      required: true,
     },
     // interests: [String],
   },
   { timestamps: true }
 );
 
-const Student = models.Student as Model<IStudent> || model<IStudent>("Student", studentSchema);
+studentSchema.pre("save", async function (next) {
+  if (this.isModified("password")) {
+    this.password = await bcrypt.hash(this.password, 10);
+  }
+  next();
+});
+
+const Student =
+  (models?.Student as Model<IStudent>) ||
+  model<IStudent>("Student", studentSchema);
 export default Student;
