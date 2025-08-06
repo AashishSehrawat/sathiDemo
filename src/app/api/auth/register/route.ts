@@ -2,7 +2,6 @@ import { asyncHandler } from "@/lib/asyncHandler";
 import dbConnect from "@/lib/dbConnect";
 import Student from "@/model/student.model";
 import { studentRegisterSchema } from "@/schema/registerSchema";
-import { error } from "console";
 import { NextResponse } from "next/server";
 
 export const POST = asyncHandler(async (req: Request) => {
