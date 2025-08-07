@@ -7,11 +7,6 @@ import studentIcon from "../../../assets/studentIcon.png";
 export default function RoleSelection() {
   return (
     <div className='w-full h-[92vh]'>
-        <div className='pt-2 pl-2 w-fit'>
-          <Link href="/">
-            <Image src={logo} alt="Logo" width={200} />
-          </Link>
-        </div>
         <div className='flex flex-col gap-4 justify-center items-center h-full'>
             <h2 className='text-4xl pb-6 font-bold '>Choose your role</h2>
             <div className='space-y-4 flex gap-6'>

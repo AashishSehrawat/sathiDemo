@@ -84,7 +84,7 @@ const Header = ({ homeRef, aboutRef, servicesRef, contactRef }: HeaderProps) => 
           </Link>
         </div>
         <div className="flex gap-2">
-          <Link href="/signin" className="cursor-pointer">
+          <Link href="/login" className="cursor-pointer">
             <Button
               className="bg-[var(--blue)] cursor-pointer text-[1.05rem]"
             >
