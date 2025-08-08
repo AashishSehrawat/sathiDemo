@@ -1,13 +1,6 @@
 "use client";
 
-import { loginSchema } from "@/schema/siginSchema";
-import { zodResolver } from "@hookform/resolvers/zod";
-import Image from "next/image";
-import Link from "next/link";
-import { useState } from "react";
-import { z } from "zod";
-import logo from "../../assets/logo.png";
-import { useForm } from "react-hook-form";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -16,12 +9,18 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { signIn } from "next-auth/react";
-import { toast } from "sonner";
+import { loginSchema } from "@/schema/siginSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { getSession, signIn } from "next-auth/react";
+import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { z } from "zod";
+import logo from "../../../assets/logo.png";
 
 export default function LoginForm() {
   const [loading, setLoading] = useState<boolean>(false);
@@ -40,19 +39,21 @@ export default function LoginForm() {
     const res = await signIn("credentials", {
       redirect: false,
       email: values.email,
-      password: values.password
-    })
+      password: values.password,
+    });
 
     setLoading(false);
 
-    if(res?.error) {
+    if (res?.error) {
       console.log("Login failed: ", res.error);
       toast.error("Login Failed");
       return;
     }
 
-    toast.success("Login successfully!")
-    router.push('/student/dashboard');
+    const session = await getSession();
+
+    toast.success("Login successfully!");
+    router.push("/callback");
   }
 
   return (

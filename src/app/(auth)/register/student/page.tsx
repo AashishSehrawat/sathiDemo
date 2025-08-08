@@ -16,7 +16,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import register from "../../../assets/studentSignup.webp";
+import register from "../../../../assets/studentSignup.webp";
 import { toast } from "sonner";
 import axios from "axios";
 import { useRouter } from "next/navigation";

@@ -1,8 +1,6 @@
-import Image from 'next/image'
-import Link from 'next/link'
-import React from 'react'
-import logo from "../../../assets/logo.png";
-import studentIcon from "../../../assets/studentIcon.png";
+import Image from 'next/image';
+import Link from 'next/link';
+import studentIcon from "../../../../assets/studentIcon.png";
 
 export default function RoleSelection() {
   return (

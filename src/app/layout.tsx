@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Lato, Nunito_Sans } from "next/font/google";
 import "./globals.css";
-import { Toaster } from "@/components/ui/sonner"
+import { Toaster } from "@/components/ui/sonner";
+import { Providers } from "./provider";
 
 // Define Lato for headings (with 'variable' for CSS flexibility)
 const lato = Lato({
@@ -29,11 +30,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${lato.variable} ${nunitoSans.variable} antialiased`}
-      >
-        {children}
-        <Toaster />
+      <body className={`${lato.variable} ${nunitoSans.variable} antialiased`}>
+        <Providers>
+          {children}
+          <Toaster />
+        </Providers>
       </body>
     </html>
   );

@@ -1,22 +1,35 @@
 "use client";
 
-import Link from "next/link";
-import logo from "../assets/logo.png";
-import Image from "next/image";
-import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"; // adjust path if needed
 import { scrollToSection } from "@/lib/utils";
-
+import { signOut, useSession } from "next-auth/react";
+import Image from "next/image";
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
+import { FaUserLarge } from "react-icons/fa6";
+import logo from "../assets/logo.png";
 
 type HeaderProps = {
-    homeRef: React.RefObject<HTMLDivElement | null>;
-    aboutRef: React.RefObject<HTMLDivElement | null>;
-    servicesRef: React.RefObject<HTMLDivElement | null>;
-    contactRef: React.RefObject<HTMLDivElement | null>;
-}
+  homeRef: React.RefObject<HTMLDivElement | null>;
+  aboutRef: React.RefObject<HTMLDivElement | null>;
+  servicesRef: React.RefObject<HTMLDivElement | null>;
+  contactRef: React.RefObject<HTMLDivElement | null>;
+};
 
-const Header = ({ homeRef, aboutRef, servicesRef, contactRef }: HeaderProps) => {
+const Header = ({
+  homeRef,
+  aboutRef,
+  servicesRef,
+  contactRef,
+}: HeaderProps) => {
   const [hasScrolled, setHasScrolled] = useState(false);
+  const session = useSession();
+  console.log("Session: ", session.data)
 
   useEffect(() => {
     const handleSroll = () => {
@@ -83,22 +96,55 @@ const Header = ({ homeRef, aboutRef, servicesRef, contactRef }: HeaderProps) => 
             Contact Us
           </Link>
         </div>
-        <div className="flex gap-2">
-          <Link href="/login" className="cursor-pointer">
-            <Button
-              className="bg-[var(--blue)] cursor-pointer text-[1.05rem]"
-            >
-              Sign in
-            </Button>
-          </Link>
-          <Link href="/register/role-selection" className="cursor-pointer">
-            <Button
-              className="bg-[var(--blue)] cursor-pointer text-[1.05rem]"
-            >
-              Sign up
-            </Button>
-          </Link>
-        </div>
+        {session?.data?.user ? (
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button variant="ghost" className="p-2">
+                <FaUserLarge size={24} />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent align="end" className="w-40">
+              <div className="flex flex-col gap-2">
+                <Button
+                  variant="outline"
+                  className="w-full"
+                >
+                  <Link
+                    href={
+                      session?.data?.user.role === "student"
+                        ? "/student/dashboard"
+                        : session?.data?.user.role === "mentor"
+                        ? "/mentor/dashboard"
+                        : "/admin/dashboard"
+                    }
+                  >
+                    Dashboard
+                  </Link>
+                </Button>
+                <Button
+                  // variant="outline"
+                  className="w-full cursor-pointer"
+                  onClick={() => signOut({ callbackUrl: "/" })}
+                >
+                  Logout
+                </Button>
+              </div>
+            </PopoverContent>
+          </Popover>
+        ) : (
+          <div className="flex gap-2">
+            <Link href="/login" className="cursor-pointer">
+              <Button className="bg-[var(--blue)] cursor-pointer text-[1.05rem]">
+                Sign in
+              </Button>
+            </Link>
+            <Link href="/register/role-selection" className="cursor-pointer">
+              <Button className="bg-[var(--blue)] cursor-pointer text-[1.05rem]">
+                Sign up
+              </Button>
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );
